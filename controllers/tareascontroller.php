@@ -1,7 +1,8 @@
 <?php
 namespace App\controllers;
-class TareassController{
+use App\models\entities\tarea;
+class TareasController{
     function getAllTareas(){
-        return Tareas::all();
+        return Tarea::all();
     }
 }

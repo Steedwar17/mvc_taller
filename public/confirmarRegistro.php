@@ -7,26 +7,27 @@ require '../views/tareasView.php';
 
 use App\views\TareasViews;
 
-$tareasViews = new TareasViews();
-$title = empty($_GET['cod'])?'Registrar Tarea':'Modificar Tarea';
-$form = $tareasViews->getFormTarea($_GET);
+$contactosViews = new TareasViews();
+$datosFormulario = $_POST;
+$msg = empty($datosFormulario['cod'])
+  ? $contactosViews->getMsgNewTarea($datosFormulario)
+  : $contactosViews->getMsgUpdateTarea($datosFormulario);
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario tareas</title>
+    <title>Confirmar acción</title>
 </head>
-
 <body>
     <header>
-        <h1><?php echo $title;?></h1>
+        <h1>Estado de acción</h1>
     </header>
     <section>
-        <?php echo $form;?>
+        <?php echo $msg;?>
+        <br>
+        <a href="inicio.php">Volver al inicio</a>
     </section>
 </body>
-
 </html>

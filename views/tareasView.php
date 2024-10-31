@@ -36,8 +36,6 @@ class TareasViews
                 $rows .= '   <td>' . $tareas ->get('idPrioridad') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('created_at') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('updated_at') . '</td>';
-                $rows .= '   <td>';
-                $rows .= '      <a href="">Crear</a>';
                 $rows .= '   </td>';
                 $rows .= '   <td>';
                 $rows .= '      <a href="">Modificar</a>';
@@ -66,6 +64,7 @@ class TareasViews
         $table .= '         <th>Responsable</th>';
         $table .= '         <th>Prioridad </th>';
         $table .= '         <th>Observaciones</th>';
+        $rows .= '      <th><a href="formulariosTareas.php">Crear</a></th>';
         $table .= '     </tr>';
         $table .= '  </thead>';
         $table .= ' <tbody>';
@@ -73,5 +72,131 @@ class TareasViews
         $table .= ' </tbody>';
         $table .= '</table>';
         return $table;
+    }
+    function getMsgNewTarea($datosFormulario)
+    {
+        $datos = [
+            "id" => $datosFormulario['id'],
+            "título" => $datosFormulario['título'],
+            "descripción" => $datosFormulario['descripción'],
+            "fechaEstimadaFinalizacion" => $datosFormulario['fechaEstimadaFinalizacion'],
+            "fechaFinalizacion" => $datosFormulario['fechaFinalizacion'],
+            "creadorTarea" => $datosFormulario['creadorTarea'],
+            "observaciones" => $datosFormulario['observaciones'],
+            "idEmpleado" => $datosFormulario['idEmpleado'],
+            "idEstado" => $datosFormulario['idEstado'],
+            "idPrioridad" => $datosFormulario['idPrioridad'],
+            "created_at" => $datosFormulario['created_at'],
+            "updated_at" => $datosFormulario['updated_at'],
+        ];
+        $confirmarAccion = $this->controller->saveTarea($datos);
+        $msg = '<h2>Resultado de la operación</h2>';
+        if ($confirmarAccion) {
+            $msg .= '<p>Datos de la tarea guardados.</p>';
+        } else {
+            $msg .= '<p>No se pudo guardar la información de la tarea</p>';
+        }
+        return $msg;
+    }
+    function getFormTarea($data)
+    {
+        $datos = null;
+        $form = '<form action="confirmarRegistro.php" method="post">';
+        if (!empty($data['cod'])) {
+            $form .= '<input type="hidden" name="cod" value="' . $data['cod'] . '">';
+            $datos = $this->controller->getTarea($data['cod']);
+        }
+        $id = empty($datos) ? '' : $datos->get('id');
+        $título = empty($datos) ? '' : $datos->get('título');
+        $descripción = empty($datos) ? '' : $datos->get('descripción');
+        $fechaEstimadaFinalizacion = empty($datos) ? '' : $datos->get('fechaEstimadaFinalizacion');
+        $fechaFinalizacion = empty($datos) ? '' : $datos->get('fechaFinalizacion');
+        $creadorTarea = empty($datos) ? '' : $datos->get('creadorTarea');
+        $observaciones = empty($datos) ? '' : $datos->get('observaciones');
+        $idEmpleado = empty($datos) ? '' : $datos->get('idEmpleado');
+        $idEstado = empty($datos) ? '' : $datos->get('idEstado');
+        $idPrioridad = empty($datos) ? '' : $datos->get('idPrioridad');
+        $created_at = empty($datos) ? '' : $datos->get('created_at');
+        $updated_at = empty($datos) ? '' : $datos->get('updated_at');
+      
+
+        $form .= '  <div>';
+        $form .= '      <label>id</label>';
+        $form .= '      <input type="text" name="id" value="' . $id . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>título</label>';
+        $form .= '      <input type="text" name="título" value="' . $título . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>descripción</label>';
+        $form .= '      <input type="text" name="descripción" value="' . $descripción . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>fechaEstimadaFinalizacion</label>';
+        $form .= '      <input type="text" name="fechaEstimadaFinalizacion" value="' . $fechaEstimadaFinalizacion . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>fechaFinalizacion</label>';
+        $form .= '      <input type="text" name="fechaFinalizacion" value="' . $fechaFinalizacion . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>creadorTarea</label>';
+        $form .= '      <input type="text" name="creadorTarea" value="' . $creadorTarea . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>observaciones</label>';
+        $form .= '      <input type="text" name="observaciones" value="' . $observaciones . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>idEmpleado</label>';
+        $form .= '      <input type="text" name="idEmpleado" value="' . $idEmpleado . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>idEstado</label>';
+        $form .= '      <input type="text" name="idEstado" value="' . $idEstado . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>idPrioridad</label>';
+        $form .= '      <input type="text" name="idPrioridad" value="' . $idPrioridad . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>created_at</label>';
+        $form .= '      <input type="text" name="created_at" value="' . $created_at . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <label>updated_at</label>';
+        $form .= '      <input type="text" name="updated_at" value="' . $updated_at . '" required>';
+        $form .= '  </div>';
+        $form .= '  <div>';
+        $form .= '      <button type="submit">Guardar</button>';
+        $form .= '  </div>';
+        $form .= '</form>';
+        return $form;
+    }
+    function getMsgUpdateTarea($datosFormulario)
+    {
+        $datos = [
+            "id" => $datosFormulario['id'],
+            "título" => $datosFormulario['título'],
+            "descripción" => $datosFormulario['descripción'],
+            "fechaEstimadaFinalizacion" => $datosFormulario['fechaEstimadaFinalizacion'],
+            "fechaFinalizacion" => $datosFormulario['fechaFinalizacion'],
+            "creadorTarea" => $datosFormulario['creadorTarea'],
+            "observaciones" => $datosFormulario['observaciones'],
+            "idEmpleado" => $datosFormulario['idEmpleado'],
+            "idEstado" => $datosFormulario['idEstado'],
+            "idPrioridad" => $datosFormulario['idPrioridad'],
+            "created_at" => $datosFormulario['created_at'],
+            "updated_at" => $datosFormulario['updated_at'],
+        ];
+        $confirmarAccion = $this->controller->updateTarea($datos);
+        $msg = '<h2>Resultado de la operación</h2>';
+        if ($confirmarAccion) {
+            $msg .= '<p>Datos de la tarea guardados.</p>';
+        } else {
+            $msg .= '<p>No se pudo guardar la información de la tarea</p>';
+        }
+        return $msg;
     }
 }

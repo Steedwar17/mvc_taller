@@ -1,15 +1,13 @@
 <?php
-
 namespace App\models\entities;
 
 use App\models\db\TareasDb;
 use App\models\queries\TareasQueries;
 
-class Tarea
-{
+class Tarea {
     private $id;
-    private $título;
-    private $descripción;
+    private $titulo;
+    private $descripcion;
     private $fechaEstimadaFinalizacion;
     private $fechaFinalizacion;
     private $creadorTarea;
@@ -19,19 +17,16 @@ class Tarea
     private $idPrioridad;
     private $created_at;
     private $updated_at;
- 
-    function set($prop, $value)
-    {
+
+    function set($prop, $value) {
         $this->{$prop} = $value;
     }
 
-    function get($prop)
-    {
+    function get($prop) {
         return $this->{$prop};
     }
 
-    static function all()
-    {
+    static function all() {
         $sql = TareasQueries::selectAll();
         $db = new TareasDb();
         $result = $db->query($sql);
@@ -39,8 +34,8 @@ class Tarea
         while ($row = $result->fetch_assoc()) {
             $tarea = new Tarea();
             $tarea->set('id', $row['id']);
-            $tarea->set('título', $row['título']);
-            $tarea->set('descripción', $row['descripción']);
+            $tarea->set('titulo', $row['titulo']);
+            $tarea->set('descripcion', $row['descripcion']);
             $tarea->set('fechaEstimadaFinalizacion', $row['fechaEstimadaFinalizacion']);
             $tarea->set('fechaFinalizacion', $row['fechaFinalizacion']);
             $tarea->set('creadorTarea', $row['creadorTarea']);
@@ -55,8 +50,8 @@ class Tarea
         $db->close();
         return $tareas;
     }
-    static function find($id)
-    {
+
+    static function find($id) {
         $sql = TareasQueries::whereId($id);
         $db = new TareasDb();
         $result = $db->query($sql);
@@ -64,8 +59,8 @@ class Tarea
         while ($row = $result->fetch_assoc()) {
             $tarea = new Tarea();
             $tarea->set('id', $row['id']);
-            $tarea->set('título', $row['título']);
-            $tarea->set('descripción', $row['descripción']);
+            $tarea->set('titulo', $row['titulo']);
+            $tarea->set('descripcion', $row['descripcion']);
             $tarea->set('fechaEstimadaFinalizacion', $row['fechaEstimadaFinalizacion']);
             $tarea->set('fechaFinalizacion', $row['fechaFinalizacion']);
             $tarea->set('creadorTarea', $row['creadorTarea']);
@@ -79,21 +74,29 @@ class Tarea
         $db->close();
         return $tarea;
     }
-    function save()
-    {
+
+    function save() {
         $sql = TareasQueries::insert($this);
         $db = new TareasDb();
         $result = $db->query($sql);
         $db->close();
         return $result;
     }
-    function update()
-    {
+
+    function update() {
         $sql = TareasQueries::update($this);
         $db = new TareasDb();
         $result = $db->query($sql);
         $db->close();
         return $result;
     }
+    function delete()
+    {
+        $sql = TareasQueries::delete($this);
+        $db = new TareasDb();
+        $result = $db->query($sql);
+        $db->close();
+        return $result;
+    }
 }
-
+?>

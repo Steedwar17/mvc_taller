@@ -12,9 +12,8 @@ class TareasQueries
     
     static function insert($tarea)
     {
-        $id = $tarea->get('id');
-        $título = $tarea->get('título');
-        $descripción = $tarea->get('descripción');
+        $titulo = $tarea->get('titulo');
+        $descripcion = $tarea->get('descripcion');
         $fechaEstimadaFinalizacion = $tarea->get('fechaEstimadaFinalizacion');
         $fechaFinalizacion = $tarea->get('fechaFinalizacion');
         $creadorTarea = $tarea->get('creadorTarea');
@@ -24,8 +23,8 @@ class TareasQueries
         $idPrioridad = $tarea->get('idPrioridad');
         $created_at = $tarea->get('created_at');
         $updated_at = $tarea->get('updated_at');
-        $sql = "insert into tareas (id, titulo, descripcion, fechaEstimadaFinalizacion, fechaFinalizacion, creadorTarea, observaciones, idEmpleado, idEstado, idPrioridad, created_at, updated_at) values ";
-        $sql .= "('$id','$título','$descripción', '$fechaEstimadaFinalizacion','$fechaFinalizacion','$creadorTarea','$observaciones','$idEmpleado','$idEstado','$idPrioridad','$created_at','$updated_at')";
+        $sql = "insert into tareas (titulo, descripcion, fechaEstimadaFinalizacion, fechaFinalizacion, creadorTarea, observaciones, idEmpleado, idEstado, idPrioridad, created_at, updated_at) values ";
+        $sql .= "('$titulo','$descripcion', '$fechaEstimadaFinalizacion','$fechaFinalizacion','$creadorTarea','$observaciones','$idEmpleado','$idEstado','$idPrioridad','$created_at','$updated_at')";
         return $sql;
     }
     static function whereId($id)
@@ -35,8 +34,8 @@ class TareasQueries
     static function update($tarea)
     {
         $id = $tarea->get('id');
-        $título = $tarea->get('título');
-        $descripción = $tarea->get('descripción');
+        $titulo = $tarea->get('titulo');
+        $descripcion = $tarea->get('descripcion');
         $fechaEstimadaFinalizacion = $tarea->get('fechaEstimadaFinalizacion');
         $fechaFinalizacion = $tarea->get('fechaFinalizacion');
         $creadorTarea = $tarea->get('creadorTarea');
@@ -46,8 +45,12 @@ class TareasQueries
         $idPrioridad = $tarea->get('idPrioridad');
         $created_at = $tarea->get('created_at');
         $updated_at = $tarea->get('updated_at');
-        $sql = "insert into tareas (id, título, descripción, fechaEstimadaFinalizacion, fechaFinalizacion, creadorTarea, observaciones, idEmpleado, idEstado, idPrioridad, created_at, updated_at) values ";
-        $sql .= "('$id','$título','$descripción', '$fechaEstimadaFinalizacion','$fechaFinalizacion','$creadorTarea','$observaciones','$idEmpleado','$idEstado','$idPrioridad','$created_at','$updated_at')";
+        $sql = "update tareas set titulo='$titulo', descripcion='$descripcion', fechaEstimadaFinalizacion='$fechaEstimadaFinalizacion', fechaFinalizacion='$fechaFinalizacion', creadorTarea='$creadorTarea', observaciones='$observaciones', idEmpleado='$idEmpleado', idEstado='$idEstado', idPrioridad='$idPrioridad', created_at='$created_at', updated_at='$updated_at' where id=$id";
         return $sql;
+    }
+    static function delete($tarea)
+    {
+        $id = $tarea->get('id');
+        return "delete from tareas where id=$id";
     }
 }

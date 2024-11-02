@@ -3,18 +3,21 @@
 namespace App\views;
 
 use App\controllers\TareasController;
+use App\views\PrioridadesViews;
+use App\views\EstadosViews;
+use App\views\EmpleadosViews;
+
+
 
 class TareasViews
 {
+
     private $controller;
     function __construct()
     {
         $this->controller = new TareasController();
     }
-
-    
-
-    function getTable()
+     function getTable()
     {
         $rows = '';
         $tareas = $this->controller->getAllTareas();
@@ -30,9 +33,9 @@ class TareasViews
                 $rows .= '   <td>' . $tareas ->get('fechaFinalizacion') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('creadorTarea') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('observaciones') . '</td>';
-                $rows .= '   <td>' . $tareas ->get('idEmpleado') . '</td>';
-                $rows .= '   <td>' . $tareas ->get('idEstado') . '</td>';
-                $rows .= '   <td>' . $tareas ->get('idPrioridad') . '</td>';
+                $rows .= '   <td>' . $tareas ->get('empleado')->get('nombre') . '</td>';
+                $rows .= '   <td>' . $tareas ->get('estado')->get('nombre') . '</td>';
+                $rows .= '   <td>' . $tareas ->get('prioridad')->get('nombre') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('created_at') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('updated_at') . '</td>';
                 $rows .= '   </td>';
@@ -83,9 +86,9 @@ class TareasViews
             "fechaFinalizacion" => $datosFormulario['fechaFinalizacion'],
             "creadorTarea" => $datosFormulario['creadorTarea'],
             "observaciones" => $datosFormulario['observaciones'],
-            "idEmpleado" => $datosFormulario['idEmpleado'],
-            "idEstado" => $datosFormulario['idEstado'],
-            "idPrioridad" => $datosFormulario['idPrioridad'],
+            "idEmpleado" => $datosFormulario['empleado'],
+            "idEstado" => $datosFormulario['estado'],
+            "idPrioridad" => $datosFormulario['prioridad'],
         ];
         $confirmarAccion = $this->controller->saveTarea($datos);
         $msg = '<h2>Resultado de la operación</h2>';
@@ -118,41 +121,37 @@ class TareasViews
 
       
         $form .= '  <div>';
-        $form .= '      <label>título</label>';
+        $form .= '      <label class="textoEjem">título</label>';
         $form .= '      <input type="text" name="titulo" value="' . $titulo . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>descripción</label>';
+        $form .= '      <label class="textoEjem">descripción</label>';
         $form .= '      <input type="text" name="descripcion" value="' . $descripcion . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>fechaEstimadaFinalizacion</label>';
+        $form .= '      <label class="textoEjem">fechaEstimadaFinalizacion</label>';
         $form .= '      <input type="text" name="fechaEstimadaFinalizacion" value="' . $fechaEstimadaFinalizacion . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>fechaFinalizacion</label>';
+        $form .= '      <label class="textoEjem">fechaFinalizacion</label>';
         $form .= '      <input type="text" name="fechaFinalizacion" value="' . $fechaFinalizacion . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>creadorTarea</label>';
+        $form .= '      <label class="textoEjem">creadorTarea</label>';
         $form .= '      <input type="text" name="creadorTarea" value="' . $creadorTarea . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>observaciones</label>';
+        $form .= '      <label class="textoEjem">observaciones</label>';
         $form .= '      <input type="text" name="observaciones" value="' . $observaciones . '" required>';
         $form .= '  </div>';
-        $form .= '  <div>';
-        $form .= '      <label>idEmpleado</label>';
-        $form .= '      <input type="text" pattern="[1-4]" name="idEmpleado" value="' . $idEmpleado . '" required>';
-        $form .= '  </div>';
-        $form .= '  <div>';
-        $form .= '      <label>idEstado</label>';
-        $form .= '      <input type="text" pattern="[1-4]" name="idEstado" value="' . $idEstado . '" required>';
-        $form .= '  </div>';
-        $form .= '  <div>';
-        $form .= '      <label>idPrioridad</label>';
-        $form .= '      <input type="text" pattern="[1-3]" name="idPrioridad" value="' . $idPrioridad . '" required>';
-        $form .= '  </div>';
+        $form .= '    <label class="textoEjem">idEmpleado</label>';
+        $form.=(new EmpleadosViews())->getSelect();
+        $form.='<br>';
+        $form .= '    <label class="textoEjem">idEstado</label>';
+        $form.=(new EstadosViews())->getSelect();
+        $form.='<br>';
+        $form .= '    <label class="textoEjem">idPrioridad</label>';
+        $form.=(new PrioridadesViews())->getSelect();
         $form .= '  <div>';
         $form .= '      <button type="submit">Guardar</button>';
         $form .= '  </div>';
@@ -169,9 +168,9 @@ class TareasViews
             "fechaFinalizacion" => $datosFormulario['fechaFinalizacion'],
             "creadorTarea" => $datosFormulario['creadorTarea'],
             "observaciones" => $datosFormulario['observaciones'],
-            "idEmpleado" => $datosFormulario['idEmpleado'],
-            "idEstado" => $datosFormulario['idEstado'],
-            "idPrioridad" => $datosFormulario['idPrioridad'],
+            "idEmpleado" => $datosFormulario['empleado'],
+            "idEstado" => $datosFormulario['estado'],
+            "idPrioridad" => $datosFormulario['prioridad'],
         ];
         if (isset($datosFormulario['created_at'])) {
             $datos['created_at'] = $datosFormulario['created_at'];
@@ -192,16 +191,6 @@ class TareasViews
             $msg .= '<p>Datos de la tarea eliminados.</p>';
         } else {
             $msg .= '<p>No se pudo eliminar la información de la tarea</p>';
-        }
-        return $msg;
-    }
-    function getMsgOrdenPrioridad($IdPrioridad){
-        $confirmarAccion = $this->controller->orderPrioridad($IdPrioridad);
-        $msg = '<h2>Resultado de la operación</h2>';
-        if ($confirmarAccion) {
-            $msg .= '<p>Datos filtrados.</p>';
-        } else {
-            $msg .= '<p>No se pudo filtrar la información de la tarea</p>';
         }
         return $msg;
     }

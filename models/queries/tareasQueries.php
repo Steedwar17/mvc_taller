@@ -7,7 +7,7 @@ class TareasQueries
 
     static function selectAll()
     {
-        return "select * from tareas";
+        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id;";
     }
     
     static function insert($tarea)
@@ -56,11 +56,6 @@ class TareasQueries
     {
         return "select * from tareas where IdPrioridad=$IdPrioridad";
     }
-    static function orderPrioridad($IdPrioridad)
-    {
-        $sql = "SELECT * FROM `tareas`  \n"
+   
 
-    . "ORDER BY `tareas`.`idPrioridad` ASC;";
-        return $sql;
-    }
 }

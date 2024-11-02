@@ -2,8 +2,15 @@
     margin: 0px;
     padding: 0px;
   }
-  
-.tabla{
-  border: 1px;
-  margin: 1px;
+
+.tabla td, .tabla th{
+  border: 2px solid #000;
+  border-radius: 10%;
+  padding: 10px;
+}
+
+.textoEjem{
+  font-size: 20px;
+  margin: 15px;
+  color: rgb(7, 41, 61);
 }

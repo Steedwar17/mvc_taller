@@ -46,11 +46,5 @@ class TareasController {
         $tarea->set('id', $id);
         return $tarea->delete();
     }
-    function  orderPrioridad($IdPrioridad)
-    {
-        $tarea = new Tarea();
-        $tarea->set('IdPrioridad', $IdPrioridad);
-        return $tarea->IdPrioridad();
-    }
 }
 ?>

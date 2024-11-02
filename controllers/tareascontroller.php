@@ -1,6 +1,7 @@
 <?php
 namespace App\controllers;
 use App\models\entities\Tarea;
+use date;
 
 class TareasController {
     function getAllTareas() {
@@ -17,8 +18,8 @@ class TareasController {
         $tarea->set('idEmpleado', $datos['idEmpleado']);
         $tarea->set('idEstado', $datos['idEstado']);
         $tarea->set('idPrioridad', $datos['idPrioridad']);
-        $tarea->set('created_at', $datos['created_at']);
-        $tarea->set('updated_at', $datos['updated_at']);
+        $tarea->set('created_at', date("Y-m-d H:i:s"));
+        $tarea->set('updated_at', date("Y-m-d H:i:s"));
         return $tarea->save();
     }
     function getTarea($id) {
@@ -36,8 +37,7 @@ class TareasController {
         $tarea->set('idEmpleado', $datos['idEmpleado']);
         $tarea->set('idEstado', $datos['idEstado']);
         $tarea->set('idPrioridad', $datos['idPrioridad']);
-        $tarea->set('created_at', $datos['created_at']);
-        $tarea->set('updated_at', $datos['updated_at']);
+        $tarea->set('updated_at',  date("Y-m-d H:i:s"));
         return $tarea->update();
     }
     function deleteTarea($id)
@@ -45,6 +45,12 @@ class TareasController {
         $tarea = new Tarea();
         $tarea->set('id', $id);
         return $tarea->delete();
+    }
+    function  orderPrioridad($IdPrioridad)
+    {
+        $tarea = new Tarea();
+        $tarea->set('IdPrioridad', $IdPrioridad);
+        return $tarea->IdPrioridad();
     }
 }
 ?>

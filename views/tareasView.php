@@ -21,7 +21,7 @@ class TareasViews
 
         
         if (count($tareas ) > 0) {
-            foreach ($tareas  as $tareas ) {
+            foreach ($tareas  as $tareas) {
                 $id = $tareas ->get('id');
                 $rows .= '<tr>';
                 $rows .= '   <td>' . $tareas ->get('titulo') . '</td>';
@@ -41,6 +41,9 @@ class TareasViews
                 $rows .= '   </td>';
                 $rows .= '   <td>';
                 $rows .= '     <a href="eliminarTarea.php?cod=' . $id . '">Eliminar</a>';
+                $rows .= '   </td>';
+                $rows .= '   <td>';
+                $rows .= '     <a href=".php?cod=' . $id . '">Filtrar por prioridad</a>';
                 $rows .= '   </td>';
                 $rows .= '</tr>';
             }
@@ -83,8 +86,6 @@ class TareasViews
             "idEmpleado" => $datosFormulario['idEmpleado'],
             "idEstado" => $datosFormulario['idEstado'],
             "idPrioridad" => $datosFormulario['idPrioridad'],
-            "created_at" => $datosFormulario['created_at'],
-            "updated_at" => $datosFormulario['updated_at'],
         ];
         $confirmarAccion = $this->controller->saveTarea($datos);
         $msg = '<h2>Resultado de la operación</h2>';
@@ -112,10 +113,10 @@ class TareasViews
         $idEmpleado = empty($datos) ? '' : $datos->get('idEmpleado');
         $idEstado = empty($datos) ? '' : $datos->get('idEstado');
         $idPrioridad = empty($datos) ? '' : $datos->get('idPrioridad');
-        $created_at = empty($datos) ? '' : $datos->get('created_at');
-        $updated_at = empty($datos) ? '' : $datos->get('updated_at');
-      
+        date_default_timezone_set('America/Bogota');
+        $fecha_actual = date("Y-m-d H:i:s");
 
+      
         $form .= '  <div>';
         $form .= '      <label>título</label>';
         $form .= '      <input type="text" name="titulo" value="' . $titulo . '" required>';
@@ -153,14 +154,6 @@ class TareasViews
         $form .= '      <input type="text" pattern="[1-3]" name="idPrioridad" value="' . $idPrioridad . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
-        $form .= '      <label>created_at</label>';
-        $form .= '      <input type="text" name="created_at" value="' . $created_at . '" required>';
-        $form .= '  </div>';
-        $form .= '  <div>';
-        $form .= '      <label>updated_at</label>';
-        $form .= '      <input type="text" name="updated_at" value="' . $updated_at . '" required>';
-        $form .= '  </div>';
-        $form .= '  <div>';
         $form .= '      <button type="submit">Guardar</button>';
         $form .= '  </div>';
         $form .= '</form>';
@@ -179,9 +172,10 @@ class TareasViews
             "idEmpleado" => $datosFormulario['idEmpleado'],
             "idEstado" => $datosFormulario['idEstado'],
             "idPrioridad" => $datosFormulario['idPrioridad'],
-            "created_at" => $datosFormulario['created_at'],
-            "updated_at" => $datosFormulario['updated_at'],
         ];
+        if (isset($datosFormulario['created_at'])) {
+            $datos['created_at'] = $datosFormulario['created_at'];
+        }
         $confirmarAccion = $this->controller->updateTarea($datos);
         $msg = '<h2>Resultado de la operación</h2>';
         if ($confirmarAccion) {
@@ -198,6 +192,16 @@ class TareasViews
             $msg .= '<p>Datos de la tarea eliminados.</p>';
         } else {
             $msg .= '<p>No se pudo eliminar la información de la tarea</p>';
+        }
+        return $msg;
+    }
+    function getMsgOrdenPrioridad($IdPrioridad){
+        $confirmarAccion = $this->controller->orderPrioridad($IdPrioridad);
+        $msg = '<h2>Resultado de la operación</h2>';
+        if ($confirmarAccion) {
+            $msg .= '<p>Datos filtrados.</p>';
+        } else {
+            $msg .= '<p>No se pudo filtrar la información de la tarea</p>';
         }
         return $msg;
     }

@@ -43,14 +43,24 @@ class TareasQueries
         $idEmpleado = $tarea->get('idEmpleado');
         $idEstado = $tarea->get('idEstado');
         $idPrioridad = $tarea->get('idPrioridad');
-        $created_at = $tarea->get('created_at');
         $updated_at = $tarea->get('updated_at');
-        $sql = "update tareas set titulo='$titulo', descripcion='$descripcion', fechaEstimadaFinalizacion='$fechaEstimadaFinalizacion', fechaFinalizacion='$fechaFinalizacion', creadorTarea='$creadorTarea', observaciones='$observaciones', idEmpleado='$idEmpleado', idEstado='$idEstado', idPrioridad='$idPrioridad', created_at='$created_at', updated_at='$updated_at' where id=$id";
+        $sql = "update tareas set titulo='$titulo', descripcion='$descripcion', fechaEstimadaFinalizacion='$fechaEstimadaFinalizacion', fechaFinalizacion='$fechaFinalizacion', creadorTarea='$creadorTarea', observaciones='$observaciones', idEmpleado='$idEmpleado', idEstado='$idEstado', idPrioridad='$idPrioridad', updated_at='$updated_at' where id=$id";
         return $sql;
     }
     static function delete($tarea)
     {
         $id = $tarea->get('id');
         return "delete from tareas where id=$id";
+    }
+    static function whereIdPrioridad($IdPrioridad)
+    {
+        return "select * from tareas where IdPrioridad=$IdPrioridad";
+    }
+    static function orderPrioridad($IdPrioridad)
+    {
+        $sql = "SELECT * FROM `tareas`  \n"
+
+    . "ORDER BY `tareas`.`idPrioridad` ASC;";
+        return $sql;
     }
 }

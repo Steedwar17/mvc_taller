@@ -17,6 +17,7 @@ class Tarea {
     private $idPrioridad;
     private $created_at;
     private $updated_at;
+    private $model;
 
     function set($prop, $value) {
         $this->{$prop} = $value;
@@ -93,6 +94,13 @@ class Tarea {
     function delete()
     {
         $sql = TareasQueries::delete($this);
+        $db = new TareasDb();
+        $result = $db->query($sql);
+        $db->close();
+        return $result;
+    }
+    function idPrioridad(){
+        $sql = TareasQueries::orderPrioridad($this);
         $db = new TareasDb();
         $result = $db->query($sql);
         $db->close();

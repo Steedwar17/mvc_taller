@@ -10,6 +10,7 @@ class TareasQueries
         return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id;";
     }
     
+    
     static function insert($tarea)
     {
         $titulo = $tarea->get('titulo');
@@ -56,6 +57,11 @@ class TareasQueries
     {
         return "select * from tareas where IdPrioridad=$IdPrioridad";
     }
+    static function whereIdEstado($Id)
+    {
+        return "select * from tareas where IdEstado=$Id";
+    }
+   
    
 
 }

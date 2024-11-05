@@ -34,7 +34,12 @@ class TareasViews
                 $rows .= '   <td>' . $tareas ->get('creadorTarea') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('observaciones') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('empleado')->get('nombre') . '</td>';
-                $rows .= '   <td>' . $tareas ->get('estado')->get('nombre') . '</td>';
+                $estadoNombre = $tareas->get('estado')->get('nombre');
+                    if ($estadoNombre == "En impedimento") {
+                        $rows .= '   <td class="impedimento">' . $estadoNombre . '</td>';
+                    } else {
+                        $rows .= '   <td>' . $estadoNombre . '</td>';
+                    }
                 $rows .= '   <td>' . $tareas ->get('prioridad')->get('nombre') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('created_at') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('updated_at') . '</td>';

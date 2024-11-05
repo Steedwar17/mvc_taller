@@ -4,6 +4,7 @@ use App\models\entities\Tarea;
 use date;
 
 class TareasController {
+    
     function getAllTareas() {
         return Tarea::all();
     }

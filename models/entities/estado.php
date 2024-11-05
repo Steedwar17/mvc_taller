@@ -31,4 +31,5 @@ static function find() {
     $db->close();
     return $estados;
 }
+
 }

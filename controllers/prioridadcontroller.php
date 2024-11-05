@@ -7,4 +7,5 @@ class PrioridadController {
     function Prioridad() {
         return Prioridad::find(); 
     }
+    
 }

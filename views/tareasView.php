@@ -17,10 +17,10 @@ class TareasViews
     {
         $this->controller = new TareasController();
     }
-     function getTable()
+     function getTable($filtro=null)
     {
         $rows = '';
-        $tareas = $this->controller->getAllTareas();
+        $tareas = $this->controller->getAllTareas($filtro);
 
         
         if (count($tareas ) > 0) {
@@ -34,12 +34,20 @@ class TareasViews
                 $rows .= '   <td>' . $tareas ->get('creadorTarea') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('observaciones') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('empleado')->get('nombre') . '</td>';
+
+
                 $estadoNombre = $tareas->get('estado')->get('nombre');
-                    if ($estadoNombre == "En impedimento") {
-                        $rows .= '   <td class="impedimento">' . $estadoNombre . '</td>';
-                    } else {
-                        $rows .= '   <td>' . $estadoNombre . '</td>';
-                    }
+                if ($estadoNombre == "En impedimento") {
+                    $rows .= '   <td class="impedimento">';
+                } else {
+                    $rows .= '   <td>';
+                }
+                $rows .= '<form action="" method="get">';
+                $rows .= '<input type="submit" value="Editar">';
+                $rows .= '</form>';
+                $rows .= '   </td>';
+
+
                 $rows .= '   <td>' . $tareas ->get('prioridad')->get('nombre') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('created_at') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('updated_at') . '</td>';
@@ -51,7 +59,10 @@ class TareasViews
                 $rows .= '     <a href="eliminarTarea.php?cod=' . $id . '">Eliminar</a>';
                 $rows .= '   </td>';
                 $rows .= '   <td>';
-                $rows .= '     <a href=".php?cod=' . $id . '">Filtrar por prioridad</a>';
+                $rows .= '     <a href=".php?cod=' . $id . '">Reasignar responsable</a>';
+                $rows .= '   </td>';
+                $rows .= '   <td>';
+                $rows .= '     <a href=".php?cod=' . $id . '">Estado</a>';
                 $rows .= '   </td>';
                 $rows .= '</tr>';
             }
@@ -199,4 +210,5 @@ class TareasViews
         }
         return $msg;
     }
+   
 }

@@ -7,7 +7,7 @@ class TareasQueries
 
     static function selectAll()
     {
-        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id;";
+        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id ORDER BY tareas.idPrioridad ASC, `tareas`.`fechaEstimadaFinalizacion` ASC;";
     }
     
     

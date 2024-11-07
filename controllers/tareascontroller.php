@@ -5,7 +5,12 @@ use date;
 
 class TareasController {
     
-    function getAllTareas() {
+    function getAllTareas($filtro) {
+        // aca va la lógica para el filtro
+
+
+        //return Tarea::filtro($filtro);
+        
         return Tarea::all();
     }
     function saveTarea($datos) {

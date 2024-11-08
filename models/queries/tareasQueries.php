@@ -61,6 +61,28 @@ class TareasQueries
     {
         return "select * from tareas where IdEstado=$Id";
     }
+    static function filtro($filtro){
+        $where = '';
+        if(!empty($filtro['titulo'])){
+            $where .= "titulo='$filtro[titulo]'";
+        }
+        if(!empty($filtro['descripcion'])){
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= "descripcion='$filtro[descripcion]'";
+        }
+        // if(!empty($filtro['fechainicio']) && !empty($filtro['fechaFinalizacion']) ){
+        //     if ($where != "") {
+        //         $where .= " AND ";
+        //     }
+        //     $where .= "fechainicio='$filtro[fechainicio]'" ;
+        // } tenemos que agregar un between para las fechas 
+
+        echo "select * from tareas where $where <br>";
+        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id where $where ORDER BY tareas.idPrioridad ASC, `tareas`.`fechaEstimadaFinalizacion` ASC;";
+        
+    }
    
    
 

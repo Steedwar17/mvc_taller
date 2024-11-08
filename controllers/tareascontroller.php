@@ -7,11 +7,34 @@ class TareasController {
     
     function getAllTareas($filtro) {
         // aca va la lógica para el filtro
-
-
-        //return Tarea::filtro($filtro);
-        
-        return Tarea::all();
+        // if(!empty($filtro['fechainicio'])){
+        //     return Tarea::filtro($filtro);
+        // }else{
+        //     return Tarea::all();
+        // }
+        // if(!empty($filtro['fechaFinalizacion'])){
+        //     return Tarea::filtro($filtro);
+        // }else{
+        //     return Tarea::all();
+        // }if(!empty($filtro['prioridad'])){
+        //     return Tarea::filtro($filtro);
+        // }else{
+        //     return Tarea::all();
+        // }if(!empty($filtro['empleado'])){
+        //     return Tarea::filtro($filtro);
+        // }else{
+        //     return Tarea::all();
+        // }
+        if(!empty($filtro['titulo'])||!empty($filtro['descripcion'])){
+            return Tarea::filtro($filtro);
+        }else{
+            return Tarea::all();
+        }
+        // if(!empty($filtro['descripcion'])){
+        //     return Tarea::filtro($filtro);
+        // }else{
+        //     return Tarea::all();
+        // }
     }
     function saveTarea($datos) {
         $tarea = new Tarea();

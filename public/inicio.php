@@ -79,7 +79,10 @@ $tareasView = new TareasViews();
             </div>
         </form>
         <br>
-        <?php echo $tareasView->getTable($_GET); ?>
+        <?php 
+        
+        echo $tareasView->getTable($_GET); 
+        ?>
         <br>
     </section>
 </body>

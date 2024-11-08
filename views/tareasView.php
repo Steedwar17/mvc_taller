@@ -19,6 +19,7 @@ class TareasViews
     }
      function getTable($filtro=null)
     {
+        
         $rows = '';
         $tareas = $this->controller->getAllTareas($filtro);
 
@@ -34,20 +35,16 @@ class TareasViews
                 $rows .= '   <td>' . $tareas ->get('creadorTarea') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('observaciones') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('empleado')->get('nombre') . '</td>';
-
-
                 $estadoNombre = $tareas->get('estado')->get('nombre');
                 if ($estadoNombre == "En impedimento") {
-                    $rows .= '   <td class="impedimento">';
+                    $rows .= '   <td class="impedimento">'.$estadoNombre.'</td>';
                 } else {
-                    $rows .= '   <td>';
+                    $rows .= '   <td>'.$estadoNombre.'</td>';
                 }
                 $rows .= '<form action="" method="get">';
                 $rows .= '<input type="submit" value="Editar">';
                 $rows .= '</form>';
                 $rows .= '   </td>';
-
-
                 $rows .= '   <td>' . $tareas ->get('prioridad')->get('nombre') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('created_at') . '</td>';
                 $rows .= '   <td>' . $tareas ->get('updated_at') . '</td>';
@@ -146,11 +143,11 @@ class TareasViews
         $form .= '  </div>';
         $form .= '  <div>';
         $form .= '      <label class="textoEjem">fechaEstimadaFinalizacion</label>';
-        $form .= '      <input type="text" name="fechaEstimadaFinalizacion" value="' . $fechaEstimadaFinalizacion . '" required>';
+        $form .= '      <input type="date" name="fechaEstimadaFinalizacion" value="' . $fechaEstimadaFinalizacion . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
         $form .= '      <label class="textoEjem">fechaFinalizacion</label>';
-        $form .= '      <input type="text" name="fechaFinalizacion" value="' . $fechaFinalizacion . '" required>';
+        $form .= '      <input type="date" name="fechaFinalizacion" value="' . $fechaFinalizacion . '" required>';
         $form .= '  </div>';
         $form .= '  <div>';
         $form .= '      <label class="textoEjem">creadorTarea</label>';

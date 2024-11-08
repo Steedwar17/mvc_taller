@@ -73,6 +73,45 @@ class Tarea {
         $db->close();
         return $tareas;
     }
+    static function filtro($filtro) {
+        $sql = TareasQueries::filtro($filtro);
+        $db = new TareasDb();
+        $result = $db->query($sql);
+        $tareas = [];
+        while ($row = $result->fetch_assoc()) {
+            $tarea = new Tarea();
+            $prioridad = new Prioridad();
+            $prioridad->set('id', $row['idPrioridad']);
+            $prioridad->set('nombre', $row['Prioridad']);
+
+            $estado = new Estado();
+            $estado->set('id', $row['idEstado']);
+            $estado->set('nombre', $row['Estado']);
+
+            $empleado = new Empleado();
+            $empleado->set('id', $row['idEmpleado']);
+            $empleado->set('nombre', $row['Empleado']);
+            
+            $tarea->set('id', $row['id']);
+            $tarea->set('titulo', $row['titulo']);
+            $tarea->set('descripcion', $row['descripcion']);
+            $tarea->set('fechaEstimadaFinalizacion', $row['fechaEstimadaFinalizacion']);
+            $tarea->set('fechaFinalizacion', $row['fechaFinalizacion']);
+            $tarea->set('creadorTarea', $row['creadorTarea']);
+            $tarea->set('observaciones', $row['observaciones']);
+            $tarea->set('idEmpleado', $row['idEmpleado']);
+            $tarea->set('empleado', $empleado);
+            $tarea->set('idEstado', $row['idEstado']);
+            $tarea->set('estado', $estado);
+            $tarea->set('idPrioridad', $row['idPrioridad']);
+            $tarea->set('prioridad', $prioridad);
+            $tarea->set('created_at', $row['created_at']);
+            $tarea->set('updated_at', $row['updated_at']);
+            array_push($tareas, $tarea);
+        }
+        $db->close();
+        return $tareas;
+    }
 
     static function find($id) {
         $sql = TareasQueries::whereId($id);

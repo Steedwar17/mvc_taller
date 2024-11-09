@@ -2,6 +2,8 @@
 require '../controllers/tareascontroller.php';
 require '../controllers/empleadocontroller.php';
 require '../controllers/prioridadcontroller.php';
+require '../controllers/estadocontroller.php';
+
 
 require '../models/db/tareas_db.php';
 require '../models/entities/tarea.php';
@@ -11,17 +13,22 @@ require '../models/entities/empleado.php';
 
 require '../models/queries/tareasQueries.php';
 require '../models/queries/empleadoQueries.php';
+require '../models/queries/estadoQueries.php';
+
 
 require '../views/tareasView.php';
 require '../views/estadosView.php';
 require '../views/empleadosView.php';
 require '../views/prioridadesView.php';
-
 require '../models/queries/prioridadQueries.php';
+
+
 
 use App\views\TareasViews;
 use App\views\PrioridadesViews;
 use App\views\EmpleadosViews;
+use App\views\EstadosViews;
+
 
 
 $tareasView = new TareasViews();
@@ -38,55 +45,64 @@ $tareasView = new TareasViews();
 
 <body>
     <header>
-        <h1>Lista de Tareas</h1>
     </header>
     <section>
-        <form action="#" method="get">
-            <br>
-            <h2>Filtrar tareas</h2>
-            <fieldset>
-                <legend>Rango de fechas (Fecha de finalización estimada):</legend>
-                <div>
-                    <label class="textoEjem">fecha de inicio</label>
-                    <input type="date" name="fechainicio" value="">
+        <form action="#" method="get" id="formTareas">
+            <h2 class="tituloFormulario">Filtrar tareas</h2>
+            <fieldset class="fieldsetFormulario">
+                <legend class="legendFormulario">Rango de fechas (Fecha de finalización estimada):</legend>
+                <div class="campoFormulario">
+                    <label for="fechainicio" class="textoEjem">Fecha de inicio</label>
+                    <input type="date" name="fechainicio" id="fechainicio" class="inputFecha">
                 </div>
-
-                <div>
-                    <label class="textoEjem">fecha de fin</label>
-                    <input type="date" name="fechaFinalizacion" value="">
+                <div class="campoFormulario">
+                    <label for="fechaFinalizacion" class="textoEjem">Fecha de fin</label>
+                    <input type="date" name="fechaFinalizacion" id="fechaFinalizacion" class="inputFecha">
                 </div>
             </fieldset>
-            <div>
-                <label class="textoEjem">Prioridad</label>
+
+            <div class="campoFormulario">
+                <label for="titulo" class="textoEjem">Título</label>
+                <input type="text" name="titulo" id="titulo" class="inputTexto">
+            </div>
+
+            <div class="campoFormulario">
+                <label for="descripcion" class="textoEjem">Descripción</label>
+                <input type="text" name="descripcion" id="descripcion" class="inputTexto">
+            </div>
+
+            <div class="campoFormulario">
+                <label for="personaResponsable" class="textoEjem">Persona responsable</label>
                 <?php
-                echo (new PrioridadesViews())->getSelect();
+                echo (new EmpleadosViews())->getSelect(true);
                 ?>
             </div>
-            <div>
-                <label class="textoEjem">Persona responsable</label>
+
+            <div class="campoFormulario">
+                <label for="estado" class="textoEjem">Estado</label>
                 <?php
-                echo (new EmpleadosViews())->getSelect();
+                echo (new EstadosViews())->getSelect(true);
                 ?>
             </div>
-            <div>
-                <label class="textoEjem">Título</label>
-                <input type="text" name="titulo" value="">
+
+            <div class="campoFormulario">
+                <label for="prioridad" class="textoEjem">Prioridad</label>
+                <?php
+                echo (new PrioridadesViews())->getSelect(true);
+                ?>
             </div>
-            <div>
-                <label class="textoEjem">Descripción</label>
-                <input type="text" name="descripcion" value="">
-            </div>
-            <div>
-                <button type="submit">Filtrar</button>
+
+            <div class="botonFormulario">
+                <button type="submit" id="btnFiltrar" class="btnFormulario">Filtrar</button>
             </div>
         </form>
         <br>
         <?php
-
         echo $tareasView->getTable($_GET);
         ?>
         <br>
     </section>
 </body>
+
 
 </html>

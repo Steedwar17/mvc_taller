@@ -7,10 +7,13 @@ use App\controllers\PrioridadController;
 
 class PrioridadesViews
 {
-    function getSelect()
+    
+    function getSelect($a=false)
     {
         $select = '<select name="prioridad">';
-        $select .= '<option value="">Seleccione una opción</option>';
+        if($a){
+            $select .= '<option value="">Seleccione una opción</option>';
+        }
         $prioridadController = new PrioridadController();
         $prioridades = $prioridadController->Prioridad();
         foreach ($prioridades as $prioridad) {

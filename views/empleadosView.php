@@ -7,10 +7,12 @@ use App\controllers\EmpleadoController;
 
 class EmpleadosViews
 {
-    function getSelect()
+    function getSelect($a=false)
     {
         $select = '<select name="empleado">';
-        $select .= '<option value="">Seleccione una opción</option>';
+        if($a){
+            $select .= '<option value="">Seleccione una opción</option>';
+        }
         $empleadoController = new EmpleadoController();
         $empleados = $empleadoController->Empleado();
         foreach ($empleados as $empleado) {

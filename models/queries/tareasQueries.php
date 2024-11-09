@@ -90,11 +90,32 @@ class TareasQueries
             }
             $where .= "idEmpleado='$filtro[empleado]'";
         }
-
-        echo "select * from tareas where $where <br>";
+        if(!empty($filtro['estado'])){
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= "idEstado='$filtro[estado]'";
+        }
         return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id where $where ORDER BY tareas.idPrioridad ASC, tareas.fechaEstimadaFinalizacion ASC;";
-        
     }
+    static function updateEstado($tarea)
+    {
+        $id = $tarea->get('id');
+        $idEstado = $tarea->get('idEstado');
+        $updated_at = $tarea->get('updated_at');
+        $sql = "update tareas set idEstado='$idEstado', updated_at='$updated_at' where id=$id";
+        return $sql;
+    }
+    static function updateEmpleado($tarea)
+    {
+        $id = $tarea->get('id');
+        $idEmpleado = $tarea->get('idEmpleado');
+        $updated_at = $tarea->get('updated_at');
+        $sql = "update tareas set idEmpleado='$idEmpleado', updated_at='$updated_at' where id=$id";
+        return $sql;
+    }
+
+    
    
    
 

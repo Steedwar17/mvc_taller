@@ -7,11 +7,12 @@ require '../views/tareasView.php';
 
 use App\views\TareasViews;
 
-$tareaViews = new TareasViews();
-$datosFormulario = $_POST;
-$msg = empty($datosFormulario['cod'])
-  ? $tareaViews->getMsgNewTarea($datosFormulario)
-  : $tareaViews->getMsgUpdateTarea($datosFormulario);
+$estadoViews = new TareasViews();
+$datosFormulario = [
+    'cod' => $_POST['cod'] ?? null,
+    'estado' => $_POST['estado'] ?? null
+];
+$msg = $estadoViews->getMsgNewEstado($datosFormulario);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,9 +28,9 @@ $msg = empty($datosFormulario['cod'])
         <h1 class="estado">Estado de acción</h1>
     </header>
     <section>
-        <?php echo $msg;?>
+        <?php echo $msg; ?>
         <br>
-        <a href="inicio.php">Volver al inicio</a>
+        <a class="botonInicio" href="inicio.php">Volver al inicio</a>
     </section>
 </body>
 </html>

@@ -8,13 +8,20 @@ class TareasController {
         $datos = [
             'fechainicio',
             'fechaFinalizacion',
-            'prioridad',
-            'empleado',
             'titulo',
             'descripcion',
+            'empleado',
+            'estado',
+            'prioridad'
         ];
-        $i = 0;
-        $llegoDato = false;
+           $fechaInicioPresente = !empty($filtro['fechainicio']);
+        $fechaFinalizacionPresente = !empty($filtro['fechaFinalizacion']);
+        
+        if (($fechaInicioPresente && !$fechaFinalizacionPresente) || (!$fechaInicioPresente && $fechaFinalizacionPresente)) {
+            return Tarea::all();
+        }
+        $llegoDato = $fechaInicioPresente && $fechaFinalizacionPresente;
+        $i = 2;
         while ($i < count($datos)) {
             $key = $datos[$i];
             if (!empty($filtro[$key])) {
@@ -29,6 +36,7 @@ class TareasController {
             return Tarea::all();
         }
     }
+    
     function saveTarea($datos) {
         $tarea = new Tarea();
         $tarea->set('titulo', $datos['titulo']);
@@ -67,6 +75,18 @@ class TareasController {
         $tarea = new Tarea();
         $tarea->set('id', $id);
         return $tarea->delete();
+    }
+    function updateEstado($datos) {
+        $tarea = new Tarea();
+        $tarea->set('id', $datos['id']);
+        $tarea->set('idEstado', $datos['idEstado']);
+        return $tarea->updateEstado();
+    }
+    function updateEmpleado($datos) {
+        $tarea = new Tarea();
+        $tarea->set('id', $datos['id']);
+        $tarea->set('idEmpleado', $datos['idEmpleado']);
+        return $tarea->updateEmpleado();
     }
 }
 ?>

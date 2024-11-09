@@ -1,4 +1,3 @@
-
 <?php
 require '../controllers/tareascontroller.php';
 require '../controllers/empleadocontroller.php';
@@ -45,43 +44,46 @@ $tareasView = new TareasViews();
         <form action="#" method="get">
             <br>
             <h2>Filtrar tareas</h2>
-        <div>
-                <label class="textoEjem">fecha de inicio</label>
-                <input type="date" name="fechainicio" value="" >
-            </div>
+            <fieldset>
+                <legend>Rango de fechas (Fecha de finalización estimada):</legend>
+                <div>
+                    <label class="textoEjem">fecha de inicio</label>
+                    <input type="date" name="fechainicio" value="">
+                </div>
 
-            <div>
-                <label class="textoEjem">fecha de finalizacion</label>
-                <input type="date" name="fechaFinalizacion" value="" >
-            </div>
+                <div>
+                    <label class="textoEjem">fecha de fin</label>
+                    <input type="date" name="fechaFinalizacion" value="">
+                </div>
+            </fieldset>
             <div>
                 <label class="textoEjem">Prioridad</label>
-            <?php
-            echo (new PrioridadesViews())->getSelect();
-            ?>
+                <?php
+                echo (new PrioridadesViews())->getSelect();
+                ?>
             </div>
             <div>
                 <label class="textoEjem">Persona responsable</label>
                 <?php
-            echo (new EmpleadosViews())->getSelect();
-            ?>
+                echo (new EmpleadosViews())->getSelect();
+                ?>
             </div>
             <div>
                 <label class="textoEjem">Título</label>
-                <input type="text" name="titulo" value="" >
+                <input type="text" name="titulo" value="">
             </div>
             <div>
                 <label class="textoEjem">Descripción</label>
-                <input type="text" name="descripcion" value="" >
+                <input type="text" name="descripcion" value="">
             </div>
             <div>
-            <button type="submit">Filtrar</button>
+                <button type="submit">Filtrar</button>
             </div>
         </form>
         <br>
-        <?php 
-        
-        echo $tareasView->getTable($_GET); 
+        <?php
+
+        echo $tareasView->getTable($_GET);
         ?>
         <br>
     </section>

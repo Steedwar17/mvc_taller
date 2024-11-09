@@ -10,6 +10,7 @@ class EmpleadosViews
     function getSelect()
     {
         $select = '<select name="empleado">';
+        $select .= '<option value="">Seleccione una opción</option>';
         $empleadoController = new EmpleadoController();
         $empleados = $empleadoController->Empleado();
         foreach ($empleados as $empleado) {

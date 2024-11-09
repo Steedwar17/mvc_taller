@@ -10,6 +10,7 @@ class PrioridadesViews
     function getSelect()
     {
         $select = '<select name="prioridad">';
+        $select .= '<option value="">Seleccione una opción</option>';
         $prioridadController = new PrioridadController();
         $prioridades = $prioridadController->Prioridad();
         foreach ($prioridades as $prioridad) {

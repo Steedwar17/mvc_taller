@@ -72,15 +72,27 @@ class TareasQueries
             }
             $where .= "descripcion='$filtro[descripcion]'";
         }
-        // if(!empty($filtro['fechainicio']) && !empty($filtro['fechaFinalizacion']) ){
-        //     if ($where != "") {
-        //         $where .= " AND ";
-        //     }
-        //     $where .= "fechainicio='$filtro[fechainicio]'" ;
-        // } tenemos que agregar un between para las fechas 
+         if(!empty($filtro['fechainicio']) && !empty($filtro['fechaFinalizacion']) ){
+             if ($where != "") {
+                 $where .= " AND ";
+             }
+             $where .= "tareas.fechaEstimadaFinalizacion BETWEEN '$filtro[fechainicio]' AND '$filtro[fechaFinalizacion]' " ;
+         } 
+         if(!empty($filtro['prioridad'])){
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= "idPrioridad='$filtro[prioridad]'";
+        }
+        if(!empty($filtro['empleado'])){
+            if ($where != "") {
+                $where .= " AND ";
+            }
+            $where .= "idEmpleado='$filtro[empleado]'";
+        }
 
         echo "select * from tareas where $where <br>";
-        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id where $where ORDER BY tareas.idPrioridad ASC, `tareas`.`fechaEstimadaFinalizacion` ASC;";
+        return "select tareas.*, prioridades.nombre as Prioridad, estados.nombre as Estado, empleados.nombre as Empleado from tareas inner join prioridades on tareas.idPrioridad=prioridades.id inner join estados on tareas.idEstado=estados.id inner join empleados on tareas.idEmpleado=empleados.id where $where ORDER BY tareas.idPrioridad ASC, tareas.fechaEstimadaFinalizacion ASC;";
         
     }
    

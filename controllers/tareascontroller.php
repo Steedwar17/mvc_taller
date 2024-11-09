@@ -4,37 +4,30 @@ use App\models\entities\Tarea;
 use date;
 
 class TareasController {
-    
     function getAllTareas($filtro) {
-        // aca va la lógica para el filtro
-        // if(!empty($filtro['fechainicio'])){
-        //     return Tarea::filtro($filtro);
-        // }else{
-        //     return Tarea::all();
-        // }
-        // if(!empty($filtro['fechaFinalizacion'])){
-        //     return Tarea::filtro($filtro);
-        // }else{
-        //     return Tarea::all();
-        // }if(!empty($filtro['prioridad'])){
-        //     return Tarea::filtro($filtro);
-        // }else{
-        //     return Tarea::all();
-        // }if(!empty($filtro['empleado'])){
-        //     return Tarea::filtro($filtro);
-        // }else{
-        //     return Tarea::all();
-        // }
-        if(!empty($filtro['titulo'])||!empty($filtro['descripcion'])){
+        $datos = [
+            'fechainicio',
+            'fechaFinalizacion',
+            'prioridad',
+            'empleado',
+            'titulo',
+            'descripcion',
+        ];
+        $i = 0;
+        $llegoDato = false;
+        while ($i < count($datos)) {
+            $key = $datos[$i];
+            if (!empty($filtro[$key])) {
+                $llegoDato = true;
+                break;
+            }
+            $i++;
+        }
+        if ($llegoDato) {
             return Tarea::filtro($filtro);
-        }else{
+        } else {
             return Tarea::all();
         }
-        // if(!empty($filtro['descripcion'])){
-        //     return Tarea::filtro($filtro);
-        // }else{
-        //     return Tarea::all();
-        // }
     }
     function saveTarea($datos) {
         $tarea = new Tarea();
